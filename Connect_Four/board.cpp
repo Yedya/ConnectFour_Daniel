@@ -46,50 +46,61 @@ void board::printMap()
 	}
 }
 
+/*
+	//Cheack what player is inserting
+	// if player 1 = |X| if player 2 use |@|
+
+*/
 
 void board::playerTurn(player &playerName,int &posToInsert)
 {
 	if(posToInsert<1 || posToInsert>7) return;
 
-	//Cheack what player is inserting
-	// if player 1 = |X| if player 2 use |@|
-
 	std::map<int,std::string>::iterator itr;
-	std::map<int,std::string>::iterator itr2;
-	itr2 = mapBoard.find(11);
-	
+	std::map<int,std::string>::iterator dM;
+	std::map<int,std::string>::iterator posBelow_1;
+	posBelow_1 = mapBoard.find(posToInsert+7);
+
 
 	itr = mapBoard.find(posToInsert);
 	int posInserted = itr->first;
 
 	int x = 0;
 	itr = mapBoard.begin();
+	dM = mapBoard.begin();
+
+
 
 	while(itr->first!=posInserted+1)
 	{
 		
-		if(itr->first==posInserted)
+		//cout << posBelow_1->second << " G  " << posBelow_1->first <<endl;
+		if(posBelow_1->second=="| O |" && posBelow_1->first<=35 )
 		{
-			//cout << "\n" <<endl;
-			//cout << "Working" << itr->second <<endl;
-			cout << itr2->second << " G  " << itr2->first <<endl;
-			/*if(itr2->second==("| O |"))*/
-
-			itr->second ="| X |";
-			while(x!=32)
-			{
-				cout << "X " << x <<endl;
-				//Get this looping so we can check the below tiles
-				cout << itr2->second <<endl;
-				//itr2++;
-				x++;
-			}
-
+			cout << "Working " << posBelow_1->first << endl;
+			std::advance( posBelow_1, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
+			std::advance( dM, 7 );
+			cout << "Working |" << dM->first << endl;
 			
 		}
-		//cout << "\n" <<endl;
+		else if(posBelow_1->second=="| X |") //Player 1
+		{
+			
+		}
+		else if(posBelow_1->second=="| @ |") //Player 2
+		{
+			
+		}
+		//std::advance( posBelow_1, 7 );
+
+
+		if(itr->first==posInserted)
+		{
+			itr->second ="| X |";
+		}
 
 		itr++;
+
 
 
 
