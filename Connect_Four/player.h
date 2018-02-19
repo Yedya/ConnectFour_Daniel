@@ -8,7 +8,7 @@ class player
 {
 	public:
 		player();
-		player(std::string &player_Name, int &player_Score);
+		player(std::string &player_Name);
 		bool player::operator<(const player& userObj) const;
 		int getPlayerScore() const;
 		string getPlayerName() const;

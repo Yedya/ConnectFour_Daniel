@@ -35,7 +35,7 @@ void board::printMap()
 {
 	std::map<int,std::string>::iterator itr;
 	itr = mapBoard.begin();
-	while(itr->first!=42)
+	while(itr->first!=35)
 	{
 		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
 		{
@@ -54,74 +54,69 @@ void board::printMap()
 
 void board::playerTurn(player &playerName,int &posToInsert)
 {
-	if(posToInsert<1 || posToInsert>7) return;
+
+	if(posToInsert<0 || posToInsert>6) return; 
 
 	std::map<int,std::string>::iterator itr;
-	std::map<int,std::string>::iterator dM;
+	std::map<int,std::string>::iterator rowToInsert;
 	std::map<int,std::string>::iterator posBelow_1;
 	posBelow_1 = mapBoard.find(posToInsert+7);
+	int endOfColumn = posToInsert+28;
 
-
-	itr = mapBoard.find(posToInsert);
-	int posInserted = itr->first;
-
-	int x = 0;
 	itr = mapBoard.begin();
-	dM = mapBoard.begin();
+	rowToInsert = mapBoard.find(posToInsert);
 
 
-
-	while(itr->first!=posInserted+1)
+	string symbolToInsert = " ";
+	if(playerName.getPlayerName()=="Player 1")
 	{
-		
-		//cout << posBelow_1->second << " G  " << posBelow_1->first <<endl;
-		if(posBelow_1->second=="| O |" && posBelow_1->first<=35 )
-		{
-			cout << "Working " << posBelow_1->first << endl;
-			std::advance( posBelow_1, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
-			std::advance( dM, 7 );
-			cout << "Working |" << dM->first << endl;
-			
-		}
-		else if(posBelow_1->second=="| X |") //Player 1
-		{
-			
-		}
-		else if(posBelow_1->second=="| @ |") //Player 2
-		{
-			
-		}
-		//std::advance( posBelow_1, 7 );
-
-
-		if(itr->first==posInserted)
-		{
-			itr->second ="| X |";
-		}
-
-		itr++;
-
-
-
-
+		symbolToInsert = "| X |";
 	}
-	// Insert at pos 4
+	else
+	{
+		symbolToInsert = "| Z |";
+	}
+
+
+
+	while(itr->first!=3)
+	{
+		if(posBelow_1->second=="| O |" && posBelow_1->first<=endOfColumn)
+		{
+			std::advance( posBelow_1, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
+			std::advance( rowToInsert, 7 );
+			if(rowToInsert->second=="| O |"  && (posBelow_1->second=="| X |" || posBelow_1->second=="| Z |"  ))
+			{
+				rowToInsert->second =symbolToInsert;
+				return;
+			}
+		}
+		else if(rowToInsert->first==posToInsert) 
+		{
+			cout << "Last  " <<  rowToInsert->first << " " << posBelow_1->second <<   endl;
+			rowToInsert->second =symbolToInsert;
+			return;
+		}
+		itr++;
+	}
+	posBelow_1->second =symbolToInsert;
+
+
+
+
+	
 	// is 0,4 empty, is 1,4,  2,4  3,4  4,4  5,4  6,4  7,4
-	// 4
-	// 11
-	// 18
-	// 25
-	// 32
+	// 4   3   
+	// 11  10
+	// 18  17
+	// 25  24
+	// 32  31  
 
-
-
-	//int c =0;
-	////0(N)
-	//for(int k =0;k<rowPos;k++)
-	//{
-	//	c++;
-	//}
-	//cout << itr->second.at(c) << " rowToChange" <<endl;
+	// 1   2   
+	// 8   9
+	// 15  16
+	// 22  23
+	// 29  30  
 }
 
 

@@ -10,11 +10,11 @@ player::player()
 
 }
 
-player::player(std::string &player_Name, int &player_Score)
+player::player(std::string &player_Name)
 {
 	
+
 	playerName = player_Name;
-	playerScore = player_Score;
 }
 	
 int player::getPlayerScore() const

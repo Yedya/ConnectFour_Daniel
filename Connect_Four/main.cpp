@@ -112,13 +112,23 @@ int main()
 	conectFourBoard.initializeBoard();
 	conectFourBoard.printMap();
 
-	player player_1;
-	player player_2;
-	int pos = 4;
+	string playerName1 = "Player 1";
+	string playerName2 = "Player 2";
+	player player_1(playerName1);
+	player player_2(playerName2);
+	int pos = 0;
 	conectFourBoard.playerTurn(player_1,pos);
+	conectFourBoard.playerTurn(player_2,pos);
+	conectFourBoard.playerTurn(player_1,pos);
+	conectFourBoard.playerTurn(player_2,pos);
+	conectFourBoard.playerTurn(player_1,pos);
+
+	//conectFourBoard.playerTurn(player_1,pos);
+
 	cout << "\n"<<endl;
 	cout << "\n"<<endl;
 	conectFourBoard.printMap();
+
 
 	system("pause");
 	return 0;
