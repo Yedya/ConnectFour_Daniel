@@ -45,23 +45,24 @@ void board::printMap()
 		itr++;
 	}
 	cout << "\n";
-	//itr = mapBoard.begin();
-	//while(itr->first!=35)
-	//{
-	//	if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
-	//	{
-	//		cout << "\n";
-	//	}
-	//	cout << itr->first;
-	//	itr++;
-	//}
+	itr = mapBoard.begin();
+	while(itr->first!=35)
+	{
+		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
+		{
+			cout << "\n";
+		}
+		cout << itr->first;
+		itr++;
+	}
 
 }
 
 /*
 	//Cheack what player is inserting
 	// if player 1 = |X| if player 2 use |@|
-
+	7,15,23,31
+	8,16,24,32
 */
 
 void board::playerTurn(player &playerName,int &posToInsert)
@@ -158,7 +159,69 @@ void board::matchChecker()
 	std::map<int,std::string>::iterator fourIter;
 	fourIter = mapBoard.find(0);
 
+	std::map<int,std::string>::iterator diagonalIter;
+	diagonalIter = mapBoard.find(0);
 
+	//while(diagonalIter->first<=6)  //while(diagonalIter->first<7)
+	//{
+	//	
+	//	//cout << diagonalIter->second;
+	//	 std::advance( innerIter, 3 );
+	//	/*diagonalIter++;*/
+
+	//}
+	//cout << diagonalIter->second << "Here " << diagonalIter->first;
+	//std::advance( diagonalIter, 7 );
+	//cout << diagonalIter->second << "Here " << diagonalIter->first;
+	//std::advance( diagonalIter,8 );
+	//cout << diagonalIter->second << "Here " << diagonalIter->first;
+	//std::advance( diagonalIter, 8 );
+	//cout << diagonalIter->second << "Here " << diagonalIter->first;
+	//std::advance( diagonalIter,8 );
+	//cout << diagonalIter->second << "Here " << diagonalIter->first;
+	//cout << "\n   ";
+	//cout << "\n   ";
+	diagonalIter = mapBoard.find(0);
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	cout << "\n   ";
+	cout << "NEW   ";
+	cout << "\n   ";
+	diagonalIter = mapBoard.find(1);
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+
+	cout << "\n   ";
+	cout << "NEW   ";
+	cout << "\n   ";
+	diagonalIter = mapBoard.find(2);
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+	std::advance( diagonalIter, 8 );
+	cout << diagonalIter->second << "Here " << diagonalIter->first;
+
+
+
+
+
+	cout << "\n   ";
+	cout << "\n   ";
+
+
+	//Horizontol 
 	while(fourIter->first!=33)
 	{
 
@@ -180,7 +243,7 @@ void board::matchChecker()
 		fourIter++;
 	}
 
-
+	//Vertical 
     while(outerIter->first!=7)
     {
         columnEnd = ((outerIter->first)+28);
