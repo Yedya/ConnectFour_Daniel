@@ -44,6 +44,18 @@ void board::printMap()
 		cout << itr->second;
 		itr++;
 	}
+	cout << "\n";
+	//itr = mapBoard.begin();
+	//while(itr->first!=35)
+	//{
+	//	if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
+	//	{
+	//		cout << "\n";
+	//	}
+	//	cout << itr->first;
+	//	itr++;
+	//}
+
 }
 
 /*
@@ -61,7 +73,7 @@ void board::playerTurn(player &playerName,int &posToInsert)
 	std::map<int,std::string>::iterator rowToInsert;
 	std::map<int,std::string>::iterator posBelow_1;
 	posBelow_1 = mapBoard.find(posToInsert+7);
-	int endOfColumn = posToInsert+28;
+	int endOfColumn = posToInsert+21;
 
 	itr = mapBoard.begin();
 	rowToInsert = mapBoard.find(posToInsert);
@@ -79,7 +91,7 @@ void board::playerTurn(player &playerName,int &posToInsert)
 
 
 
-	while(itr->first!=3)
+	while(itr->first!=7)
 	{
 		if(posBelow_1->second=="| O |" && posBelow_1->first<=endOfColumn)
 		{
@@ -93,7 +105,7 @@ void board::playerTurn(player &playerName,int &posToInsert)
 		}
 		else if(rowToInsert->first==posToInsert) 
 		{
-			cout << "Last  " <<  rowToInsert->first << " " << posBelow_1->second <<   endl;
+			//cout << "Last  " <<  rowToInsert->first << " " << posBelow_1->second <<   endl;
 			rowToInsert->second =symbolToInsert;
 			return;
 		}
@@ -102,6 +114,8 @@ void board::playerTurn(player &playerName,int &posToInsert)
 	posBelow_1->second =symbolToInsert;
 
 
+
+	
 
 
 	
@@ -117,8 +131,87 @@ void board::playerTurn(player &playerName,int &posToInsert)
 	// 15  16
 	// 22  23
 	// 29  30  
+
+	// 0   2   
+	// 7   9
+	// 14  16
+	// 28  23
+	// 35  30  
+
 }
 
 
+
+void board::matchChecker()
+{
+
+
+    std::map<int,std::string>::iterator outerIter;
+    std::map<int,std::string>::iterator innerIter;
+    outerIter = mapBoard.begin();
+    innerIter = mapBoard.begin();
+    int countD = 0;
+    int countH = 0;
+    int countV = 0;
+    int columnEnd = 0;
+
+	std::map<int,std::string>::iterator fourIter;
+	fourIter = mapBoard.find(0);
+
+
+	while(fourIter->first!=33)
+	{
+
+        if(fourIter->second=="| X |")
+        {
+            countH+=1;
+				
+        }
+		else if(fourIter->second!="| X |")
+		{
+			countH=0;
+		}
+		if(countV==4 || countH==4 || countD==4 )
+		{
+			cout << "Connect 4!";
+			return;
+		}
+
+		fourIter++;
+	}
+
+
+    while(outerIter->first!=7)
+    {
+        columnEnd = ((outerIter->first)+28);
+        while(innerIter->first<=columnEnd)
+        {
+            cout << "\n   ";
+            if(innerIter->second=="| X |")
+            {
+                countV+=1;
+				
+            }
+			else if(innerIter->second!="| X |")
+			{
+				countV=0;
+			}
+
+            cout << "Inner " << innerIter->first  <<  " Outer " << outerIter->first ;
+            std::advance( innerIter, 7 );
+        }
+		if(countV==4 || countH==4 || countD==4 )
+		{
+			cout << "Connect 4!";
+			return;
+		}
+    outerIter++;
+	//Move Our inner iterator to the next column
+    innerIter = outerIter;
+
+    }
+
+
+}
  
 

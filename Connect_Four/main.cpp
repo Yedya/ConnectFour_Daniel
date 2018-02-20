@@ -117,18 +117,34 @@ int main()
 	player player_1(playerName1);
 	player player_2(playerName2);
 	int pos = 0;
-	conectFourBoard.playerTurn(player_1,pos);
-	conectFourBoard.playerTurn(player_2,pos);
-	conectFourBoard.playerTurn(player_1,pos);
-	conectFourBoard.playerTurn(player_2,pos);
-	conectFourBoard.playerTurn(player_1,pos);
-
 	//conectFourBoard.playerTurn(player_1,pos);
+	//conectFourBoard.playerTurn(player_1,pos);
+	//conectFourBoard.playerTurn(player_2,pos);
+	conectFourBoard.playerTurn(player_1,pos);
+	
+	
+	int pos2 = 1;
+	//
+	//conectFourBoard.playerTurn(player_1,pos2);
+	//conectFourBoard.playerTurn(player_1,pos2);
+	//conectFourBoard.playerTurn(player_2,pos2);
+	//conectFourBoard.playerTurn(player_1,pos2);
+	conectFourBoard.playerTurn(player_1,pos2);
+	
+	int pos3 = 2;
+	int pos4 = 3;
+	//conectFourBoard.playerTurn(player_1,pos4);
+	conectFourBoard.playerTurn(player_1,pos3);
+	conectFourBoard.playerTurn(player_1,pos4);
+
+	conectFourBoard.playerTurn(player_1,pos4);
+	conectFourBoard.playerTurn(player_1,pos4);
 
 	cout << "\n"<<endl;
 	cout << "\n"<<endl;
 	conectFourBoard.printMap();
-
+	cout << "\n" <<endl;
+	conectFourBoard.matchChecker();
 
 	system("pause");
 	return 0;
