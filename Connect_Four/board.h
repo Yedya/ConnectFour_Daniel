@@ -13,7 +13,8 @@ class board
 		void initializeBoard();
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
-		void matchChecker();
+		void horizVertCheker();
+		void digonalChecker();
 
 	private:
 		int boardSize;

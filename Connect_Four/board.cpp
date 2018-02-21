@@ -46,24 +46,21 @@ void board::printMap()
 	}
 	cout << "\n";
 	itr = mapBoard.begin();
+	cout << "\n";
 	while(itr->first!=35)
 	{
 		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
 		{
 			cout << "\n";
 		}
-		cout << itr->first;
+
+		cout << "| " << itr->first << " |";
 		itr++;
 	}
 
 }
 
-/*
-	//Cheack what player is inserting
-	// if player 1 = |X| if player 2 use |@|
-	7,15,23,31
-	8,16,24,32
-*/
+
 
 void board::playerTurn(player &playerName,int &posToInsert)
 {
@@ -106,7 +103,6 @@ void board::playerTurn(player &playerName,int &posToInsert)
 		}
 		else if(rowToInsert->first==posToInsert) 
 		{
-			//cout << "Last  " <<  rowToInsert->first << " " << posBelow_1->second <<   endl;
 			rowToInsert->second =symbolToInsert;
 			return;
 		}
@@ -142,128 +138,287 @@ void board::playerTurn(player &playerName,int &posToInsert)
 }
 
 
-
-void board::matchChecker()
+void board::digonalChecker()
 {
+	std::map<int,std::string>::iterator diagonalIter;
+	int startTile =0;
+	int countD = 0;
+
+	//Add if statements to all whiles?
+
+	diagonalIter = mapBoard.find(0);
+	while(diagonalIter->first<=24)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(1);
+	while(diagonalIter->first<=25)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(2);
+	while(diagonalIter->first<=26)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(3);
+	while(diagonalIter->first<=27)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(7);
+	while(diagonalIter->first<=31)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(8);
+	while(diagonalIter->first<=32)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(9);
+	while(diagonalIter->first<=33)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(10);
+	while(diagonalIter->first<=34)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(3);
+	while(diagonalIter->first<=21)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(4);
+	while(diagonalIter->first<=22)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(5);
+	while(diagonalIter->first<=23)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(6);
+	while(diagonalIter->first<=24)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	diagonalIter = mapBoard.find(11);
+	while(diagonalIter->first<=29)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(12);
+	while(diagonalIter->first<=30)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+
+	diagonalIter = mapBoard.find(13);
+	while(diagonalIter->first<=31)
+	{
+		if(diagonalIter->second!="| O |")
+		{
+			countD+=1;
+		}
+		else
+		{
+			countD = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}	
+
+	if(countD==4)
+	{
+
+		cout << "Connect 4!";
+		return;
+	}
+
+}
 
 
+void board::horizVertCheker()
+{
     std::map<int,std::string>::iterator outerIter;
     std::map<int,std::string>::iterator innerIter;
+	std::map<int,std::string>::iterator verIterator;
+
     outerIter = mapBoard.begin();
     innerIter = mapBoard.begin();
+	verIterator = mapBoard.find(0);
+
     int countD = 0;
     int countH = 0;
     int countV = 0;
     int columnEnd = 0;
 
-	std::map<int,std::string>::iterator fourIter;
-	fourIter = mapBoard.find(0);
-
-	std::map<int,std::string>::iterator diagonalIter;
-	diagonalIter = mapBoard.find(0);
-
-	//while(diagonalIter->first<=6)  //while(diagonalIter->first<7)
-	//{
-	//	
-	//	//cout << diagonalIter->second;
-	//	 std::advance( innerIter, 3 );
-	//	/*diagonalIter++;*/
-
-	//}
-	//cout << diagonalIter->second << "Here " << diagonalIter->first;
-	//std::advance( diagonalIter, 7 );
-	//cout << diagonalIter->second << "Here " << diagonalIter->first;
-	//std::advance( diagonalIter,8 );
-	//cout << diagonalIter->second << "Here " << diagonalIter->first;
-	//std::advance( diagonalIter, 8 );
-	//cout << diagonalIter->second << "Here " << diagonalIter->first;
-	//std::advance( diagonalIter,8 );
-	//cout << diagonalIter->second << "Here " << diagonalIter->first;
-	//cout << "\n   ";
-	//cout << "\n   ";
-	diagonalIter = mapBoard.find(0);
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	cout << "\n   ";
-	cout << "NEW   ";
-	cout << "\n   ";
-	diagonalIter = mapBoard.find(1);
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-
-	cout << "\n   ";
-	cout << "NEW   ";
-	cout << "\n   ";
-	diagonalIter = mapBoard.find(2);
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-	std::advance( diagonalIter, 8 );
-	cout << diagonalIter->second << "Here " << diagonalIter->first;
-
-
-
-
-
-	cout << "\n   ";
-	cout << "\n   ";
-
-
 	//Horizontol 
-	while(fourIter->first!=33)
+	while(verIterator->first!=34)
 	{
-
-        if(fourIter->second=="| X |")
+        if(verIterator->second=="| X |")
         {
-            countH+=1;
-				
+            countH+=1;	
         }
-		else if(fourIter->second!="| X |")
+		else if(verIterator->second!="| X |")
 		{
 			countH=0;
 		}
-		if(countV==4 || countH==4 || countD==4 )
+		if(countV==4 || countH==4)
 		{
 			cout << "Connect 4!";
 			return;
 		}
-
-		fourIter++;
+		verIterator++;
 	}
-
+	
 	//Vertical 
     while(outerIter->first!=7)
     {
         columnEnd = ((outerIter->first)+28);
         while(innerIter->first<=columnEnd)
-        {
-            cout << "\n   ";
+        { 
             if(innerIter->second=="| X |")
             {
-                countV+=1;
-				
+                countV+=1;	
             }
 			else if(innerIter->second!="| X |")
 			{
 				countV=0;
 			}
 
-            cout << "Inner " << innerIter->first  <<  " Outer " << outerIter->first ;
+            //cout << "Inner " << innerIter->first  <<  " Outer " << outerIter->first ;
             std::advance( innerIter, 7 );
         }
-		if(countV==4 || countH==4 || countD==4 )
+		if(countV==4 || countH==4 )
 		{
 			cout << "Connect 4!";
 			return;
