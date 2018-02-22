@@ -13,7 +13,7 @@ class board
 		void initializeBoard();
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
-		void horizVertCheker();
+		void horizVertCheker(player &player);
 		void digonalChecker();
 
 	private:

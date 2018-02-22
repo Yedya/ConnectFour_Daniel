@@ -9,13 +9,16 @@ class player
 	public:
 		player();
 		player(std::string &player_Name);
-		bool player::operator<(const player& userObj) const;
 		int getPlayerScore() const;
 		string getPlayerName() const;
+		bool getPlayerStatus() const;
+		void setPlayerStatus(bool currentStatus);
 		void setScore(int &playerScore);
 
 	private:
 		std::string playerName;
+		std::string playerSymbol;
+		bool gameWon;
 		int playerScore;
 
 };

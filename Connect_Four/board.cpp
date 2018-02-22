@@ -11,8 +11,6 @@ board::board()
 	std::map<int,std::string> mapBoard;
 }
 
-
-
 /*
 	Time: 0(N)
 	Space: 0(N)
@@ -20,11 +18,12 @@ board::board()
 void board::initializeBoard() 
 {
 	int iter = 0;
-	while(iter!=43)
+	while(iter<=44) // Was 44 in case anything BLOWS UP
 	{
 		mapBoard.insert(std::make_pair(iter,"| O |"));
 		iter++;
 	}
+	//cout << iter <<endl;
 }
 
 /*
@@ -35,108 +34,64 @@ void board::printMap()
 {
 	std::map<int,std::string>::iterator itr;
 	itr = mapBoard.begin();
-	while(itr->first!=35)
+	while(itr->first!=35) //35
 	{
-		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
+		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35)
 		{
 			cout << "\n";
 		}
 		cout << itr->second;
 		itr++;
 	}
-	cout << "\n";
-	itr = mapBoard.begin();
-	cout << "\n";
-	while(itr->first!=35)
-	{
-		if(itr->first==7 || itr->first==14  || itr->first==21 || itr->first==28 || itr->first==35 || itr->first==42)
-		{
-			cout << "\n";
-		}
-
-		cout << "| " << itr->first << " |";
-		itr++;
-	}
-
 }
-
-
 
 void board::playerTurn(player &playerName,int &posToInsert)
 {
+    std::map<int,std::string>::iterator columnIterator;
+    std::map<int,std::string>::iterator tileToInsert;
+    std::map<int,std::string>::iterator tileBelow;
 
-	if(posToInsert<0 || posToInsert>6) return; 
+    tileBelow = mapBoard.find(posToInsert+7);
+	tileToInsert = mapBoard.find(posToInsert);
+	columnIterator = mapBoard.begin();
+    int endOfColumn = posToInsert+21;
 
-	std::map<int,std::string>::iterator itr;
-	std::map<int,std::string>::iterator rowToInsert;
-	std::map<int,std::string>::iterator posBelow_1;
-	posBelow_1 = mapBoard.find(posToInsert+7);
-	int endOfColumn = posToInsert+21;
+	//If the column is full
+	if(tileToInsert->second!="| O |") return;
 
-	itr = mapBoard.begin();
-	rowToInsert = mapBoard.find(posToInsert);
-
-
-	string symbolToInsert = " ";
-	if(playerName.getPlayerName()=="Player 1")
-	{
-		symbolToInsert = "| X |";
-	}
-	else
-	{
-		symbolToInsert = "| Z |";
-	}
-
-
-
-	while(itr->first!=7)
-	{
-		if(posBelow_1->second=="| O |" && posBelow_1->first<=endOfColumn)
-		{
-			std::advance( posBelow_1, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
-			std::advance( rowToInsert, 7 );
-			if(rowToInsert->second=="| O |"  && (posBelow_1->second=="| X |" || posBelow_1->second=="| Z |"  ))
-			{
-				rowToInsert->second =symbolToInsert;
-				return;
-			}
-		}
-		else if(rowToInsert->first==posToInsert) 
-		{
-			rowToInsert->second =symbolToInsert;
-			return;
-		}
-		itr++;
-	}
-	posBelow_1->second =symbolToInsert;
-
-
-
+    string symbolToInsert = " ";
+    if(playerName.getPlayerName()=="Player 1")
+    {
+        symbolToInsert = "| X |";
+    }
+    else
+    {
+        symbolToInsert = "| @ |";
+    }
 	
+    while(columnIterator->first!=7)
+    {
+        if(tileBelow->second=="| O |" && tileBelow->first<=endOfColumn)
+        {
+            std::advance( tileBelow, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
+            std::advance( tileToInsert, 7 );
 
-
-	
-	// is 0,4 empty, is 1,4,  2,4  3,4  4,4  5,4  6,4  7,4
-	// 4   3   
-	// 11  10
-	// 18  17
-	// 25  24
-	// 32  31  
-
-	// 1   2   
-	// 8   9
-	// 15  16
-	// 22  23
-	// 29  30  
-
-	// 0   2   
-	// 7   9
-	// 14  16
-	// 28  23
-	// 35  30  
-
+			//If the tile to insert is free and tiles below it are occuppied, insert the piece there
+            if(tileToInsert->second=="| O |"  && (tileBelow->second=="| X |" || tileBelow->second=="| @ |"  ))
+            {
+                tileToInsert->second =symbolToInsert;
+                return;
+            }
+        }
+        else if(tileToInsert->first==posToInsert) 
+        {
+	        tileToInsert->second =symbolToInsert;
+            return;
+        }
+        columnIterator++;
+    }
+    tileBelow->second =symbolToInsert;
 }
-
 
 void board::digonalChecker()
 {
@@ -145,6 +100,7 @@ void board::digonalChecker()
 	int countD = 0;
 
 	//Add if statements to all whiles?
+	// Return true if connect 4
 
 	diagonalIter = mapBoard.find(0);
 	while(diagonalIter->first<=24)
@@ -358,46 +314,60 @@ void board::digonalChecker()
 
 	if(countD==4)
 	{
-
 		cout << "Connect 4!";
 		return;
 	}
 
 }
 
-
-void board::horizVertCheker()
+void board::horizVertCheker(player &player)
 {
     std::map<int,std::string>::iterator outerIter;
     std::map<int,std::string>::iterator innerIter;
-	std::map<int,std::string>::iterator verIterator;
+	std::map<int,std::string>::iterator horizIter;
 
     outerIter = mapBoard.begin();
     innerIter = mapBoard.begin();
-	verIterator = mapBoard.find(0);
+	horizIter = mapBoard.find(0);
 
-    int countD = 0;
-    int countH = 0;
-    int countV = 0;
+    int countH_P1 = 0;
+	int countH_P2 = 0;
+    int countV_P1 = 0;
+	int countV_P2 = 0;
     int columnEnd = 0;
 
 	//Horizontol 
-	while(verIterator->first!=34)
+	while(horizIter->first<=35)
 	{
-        if(verIterator->second=="| X |")
-        {
-            countH+=1;	
-        }
-		else if(verIterator->second!="| X |")
+		if(horizIter->second=="| X |")
 		{
-			countH=0;
+			countH_P1+=1;	
 		}
-		if(countV==4 || countH==4)
+		else if(horizIter->second=="| @ |")
 		{
-			cout << "Connect 4!";
+			countH_P2+=1;
+		}
+		else if(horizIter->second=="| O |")
+		{
+			countH_P1=0;
+			countH_P2=0;
+		}
+
+		if(countH_P1==4)
+		{
+			cout << "Connect 4 P1";
+			player.setPlayerStatus(true);
 			return;
 		}
-		verIterator++;
+		else if(countH_P2==4)
+		{
+			cout << "Connect 4 P2";
+			player.setPlayerStatus(true);
+			return;
+		}
+		
+		horizIter++;
+		
 	}
 	
 	//Vertical 
@@ -408,21 +378,33 @@ void board::horizVertCheker()
         { 
             if(innerIter->second=="| X |")
             {
-                countV+=1;	
+                countV_P1+=1;	
             }
-			else if(innerIter->second!="| X |")
+			else if(innerIter->second=="| @ |")
 			{
-				countV=0;
+				countV_P2+=1;
 			}
-
-            //cout << "Inner " << innerIter->first  <<  " Outer " << outerIter->first ;
+			else if(innerIter->second=="| O |")
+			{
+				countV_P1=0;
+				countV_P2=0;
+			}
             std::advance( innerIter, 7 );
         }
-		if(countV==4 || countH==4 )
+		if(countV_P1==4)
 		{
-			cout << "Connect 4!";
+			cout << "Connect 4 P1";
+			player.setPlayerStatus(true);
 			return;
 		}
+		else if(countV_P2==4)
+		{
+			cout << "Connect 4 P2";
+			player.setPlayerStatus(true);
+			return;
+		}
+
+
     outerIter++;
 	//Move Our inner iterator to the next column
     innerIter = outerIter;
