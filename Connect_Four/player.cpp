@@ -12,8 +12,6 @@ player::player()
 
 player::player(std::string &player_Name)
 {
-	
-
 	playerName = player_Name;
 	gameWon = false;
 }
@@ -26,19 +24,16 @@ int player::getPlayerScore() const
 void player::setScore(int &currentPlayerScore)
 {
 	playerScore = currentPlayerScore;
-
 }
 
 
 string player::getPlayerName() const
 {
-
 	return playerName;
 }
 
 bool player::getPlayerStatus() const
 {
-
 	return gameWon;
 }
 
