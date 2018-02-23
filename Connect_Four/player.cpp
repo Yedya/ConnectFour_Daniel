@@ -26,7 +26,6 @@ void player::setScore(int &currentPlayerScore)
 	playerScore = currentPlayerScore;
 }
 
-
 string player::getPlayerName() const
 {
 	return playerName;

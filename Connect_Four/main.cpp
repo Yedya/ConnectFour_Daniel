@@ -60,7 +60,6 @@ void main()
 			}
 	}
 
-
 	if(turns==35 && (player_1.getPlayerStatus()==false || player_2.getPlayerStatus()==false))
 	{
 		cout << "Board is full, let's play again and nobody won..." <<endl;
