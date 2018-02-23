@@ -14,7 +14,8 @@ class board
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
 		void horizVertCheker(player &player);
-		void digonalChecker();
+		void digonalChecker(player &player);
+		
 
 	private:
 		int boardSize;

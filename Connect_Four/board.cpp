@@ -18,12 +18,11 @@ board::board()
 void board::initializeBoard() 
 {
 	int iter = 0;
-	while(iter<=44) // Was 44 in case anything BLOWS UP
+	while(iter<=44) 
 	{
 		mapBoard.insert(std::make_pair(iter,"| O |"));
 		iter++;
 	}
-	//cout << iter <<endl;
 }
 
 /*
@@ -44,7 +43,10 @@ void board::printMap()
 		itr++;
 	}
 }
-
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::playerTurn(player &playerName,int &posToInsert)
 {
     std::map<int,std::string>::iterator columnIterator;
@@ -92,12 +94,16 @@ void board::playerTurn(player &playerName,int &posToInsert)
     }
     tileBelow->second =symbolToInsert;
 }
-
-void board::digonalChecker()
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
+void board::digonalChecker(player &player)
 {
 	std::map<int,std::string>::iterator diagonalIter;
 	int startTile =0;
-	int countD = 0;
+	int countD_P1 = 0;
+	int countD_P2 = 0;
 
 	//Add if statements to all whiles?
 	// Return true if connect 4
@@ -105,41 +111,71 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(0);
 	while(diagonalIter->first<=24)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
-	}	
+	}
 
 	diagonalIter = mapBoard.find(1);
 	while(diagonalIter->first<=25)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
-	}	
+	}
 
 	diagonalIter = mapBoard.find(2);
 	while(diagonalIter->first<=26)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -147,41 +183,80 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(3);
 	while(diagonalIter->first<=27)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
-
 	diagonalIter = mapBoard.find(7);
 	while(diagonalIter->first<=31)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
+		if(countD_P2==4)
+		{
+			cout << "Connect 4!";
+			player.setPlayerStatus(true);
+			return;
+		}
+		else if(countD_P1==4)
+		{
+			cout << "Connect 4!";
+			player.setPlayerStatus(true);
+			return;
+		}
 	}	
 
 	diagonalIter = mapBoard.find(8);
 	while(diagonalIter->first<=32)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -189,41 +264,70 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(9);
 	while(diagonalIter->first<=33)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
+		}
+		std::advance( diagonalIter, 8 );
+	}
+	diagonalIter = mapBoard.find(10);
+	while(diagonalIter->first<=34)
+	{
+		if(diagonalIter->second=="| X |")
+		{
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
+		}
+		else if (diagonalIter->second!="| X |")
+		{
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
 
-	diagonalIter = mapBoard.find(10);
-	while(diagonalIter->first<=34)
-	{
-		if(diagonalIter->second!="| O |")
-		{
-			countD+=1;
-		}
-		else
-		{
-			countD = 0;
-		}
-		std::advance( diagonalIter, 8 );
-	}	
-
 	diagonalIter = mapBoard.find(3);
 	while(diagonalIter->first<=21)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -231,13 +335,23 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(4);
 	while(diagonalIter->first<=22)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -245,41 +359,71 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(5);
 	while(diagonalIter->first<=23)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
-	}	
+	}
 
 	diagonalIter = mapBoard.find(6);
 	while(diagonalIter->first<=24)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
-	}	
+	}
 
 	diagonalIter = mapBoard.find(11);
 	while(diagonalIter->first<=29)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -287,13 +431,23 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(12);
 	while(diagonalIter->first<=30)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			//cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			//cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
 	}
@@ -301,30 +455,52 @@ void board::digonalChecker()
 	diagonalIter = mapBoard.find(13);
 	while(diagonalIter->first<=31)
 	{
-		if(diagonalIter->second!="| O |")
+		if(diagonalIter->second=="| X |")
 		{
-			countD+=1;
+			countD_P1+=1;
+			cout << "count " << countD_P1 << endl;
 		}
-		else
+		else if (diagonalIter->second!="| X |")
 		{
-			countD = 0;
+			countD_P1 = 0;
+		}
+		if(diagonalIter->second=="| @ |")
+		{
+			countD_P2+=1;
+			cout << "count " << countD_P2 << endl;
+		}
+		else if (diagonalIter->second!="| @ |")
+		{
+			countD_P2 = 0;
 		}
 		std::advance( diagonalIter, 8 );
-	}	
+	}
 
-	if(countD==4)
+	if(countD_P2==4)
 	{
 		cout << "Connect 4!";
+		player.setPlayerStatus(true);
+		return;
+	}
+	else if(countD_P1==4)
+	{
+		cout << "Connect 4!";
+		player.setPlayerStatus(true);
 		return;
 	}
 
 }
 
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::horizVertCheker(player &player)
 {
     std::map<int,std::string>::iterator outerIter;
     std::map<int,std::string>::iterator innerIter;
 	std::map<int,std::string>::iterator horizIter;
+	std::map<int,std::string>::iterator horizIterFast;
 
     outerIter = mapBoard.begin();
     innerIter = mapBoard.begin();
@@ -339,37 +515,39 @@ void board::horizVertCheker(player &player)
 	//Horizontol 
 	while(horizIter->first<=35)
 	{
+
 		if(horizIter->second=="| X |")
 		{
 			countH_P1+=1;	
 		}
-		else if(horizIter->second=="| @ |")
-		{
-			countH_P2+=1;
-		}
-		else if(horizIter->second=="| O |")
+		else if(horizIter->second!="| X |")
 		{
 			countH_P1=0;
-			countH_P2=0;
 		}
+		if(horizIter->second=="| @ |")
+		{
+			countH_P2+=1;	
+		}
+		else if(horizIter->second!="| @ |")
+		{
+			countH_P2=0;
+		}	
 
 		if(countH_P1==4)
 		{
-			cout << "Connect 4 P1";
+			cout << "H Connect 4 P1 "<<endl;
 			player.setPlayerStatus(true);
 			return;
 		}
-		else if(countH_P2==4)
+		if(countH_P2==4)
 		{
-			cout << "Connect 4 P2";
+			cout << "H Connect 4 P2";
 			player.setPlayerStatus(true);
 			return;
 		}
-		
-		horizIter++;
-		
+		horizIter++;	
 	}
-	
+
 	//Vertical 
     while(outerIter->first!=7)
     {
@@ -380,26 +558,29 @@ void board::horizVertCheker(player &player)
             {
                 countV_P1+=1;	
             }
-			else if(innerIter->second=="| @ |")
+			else if(innerIter->second!="| X |")
+			{
+				countV_P1=0;
+			}
+			if(innerIter->second=="| @ |")
 			{
 				countV_P2+=1;
 			}
-			else if(innerIter->second=="| O |")
+			else if(innerIter->second!="| @ |")
 			{
-				countV_P1=0;
 				countV_P2=0;
 			}
             std::advance( innerIter, 7 );
         }
 		if(countV_P1==4)
 		{
-			cout << "Connect 4 P1";
+			cout << "V Connect 4 P1";
 			player.setPlayerStatus(true);
 			return;
 		}
 		else if(countV_P2==4)
 		{
-			cout << "Connect 4 P2";
+			cout << "V Connect 4 P2";
 			player.setPlayerStatus(true);
 			return;
 		}

@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-int main()
+void main()
 {
 
 	board conectFourBoard;
@@ -37,9 +37,9 @@ int main()
 	bool result = false;
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
-	while(turns<=34 && player_1.getPlayerStatus()!=true && player_2.getPlayerStatus()!=true )
+	while(turns<=34 )
 	{
-		cout << "Status " << player_1.getPlayerStatus()  <<endl;
+		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
 		cin >> pos;
 		pos-=1;
@@ -52,34 +52,46 @@ int main()
 			{
 				conectFourBoard.playerTurn(player_1,pos);
 				conectFourBoard.horizVertCheker(player_1);  
-				conectFourBoard.digonalChecker();
+				conectFourBoard.digonalChecker(player_1);
 			}
 			else
 			{
 				conectFourBoard.playerTurn(player_2,pos);
 				conectFourBoard.horizVertCheker(player_2);  
-				conectFourBoard.digonalChecker();
+				conectFourBoard.digonalChecker(player_2);
 			}
+
+			if(player_2.getPlayerStatus()==true || player_1.getPlayerStatus()==true )
+			{
+				break;
+			}
+
+
 			conectFourBoard.printMap();
-			//conectFourBoard.horizVertCheker();   //* THIS DOESN'T WORK WITHIN YOUR MAIN TURN FUNCTION BECAUSE OF THE "RETURNS" upon insertion 
-			//conectFourBoard.digonalChecker();
 			turns++;
 	}
-	//conectFourBoard.playerTurn(player_1,pos);
-	//conectFourBoard.playerTurn(player_1,pos);
+	cout << "n\ "<<endl;
 
-	//conectFourBoard.playerTurn(player_1,pos2);
-	//conectFourBoard.playerTurn(player_1,pos2);
-	//conectFourBoard.playerTurn(player_1,pos2);
+	if(turns==35 && (player_1.getPlayerStatus()==false || player_2.getPlayerStatus()==false))
+	{
+		cout << "Board is full, let's play again and nobody won..." <<endl;
+		return;
+	}
 
-	//conectFourBoard.playerTurn(player_1,pos3);
-	//conectFourBoard.playerTurn(player_1,pos3);
-	//
 
-	//conectFourBoard.playerTurn(player_1,pos4);
+	else if(player_1.getPlayerStatus()==true)
+	{
+		cout << "Player 1 Wins" <<endl;
+		
+	}
+	else if(player_2.getPlayerStatus()==true)
+	{
+		cout << "Player 2 Wins" <<endl;
+	}
+	
 
 	system("pause");
-	return 0;
+
 }
 
 
