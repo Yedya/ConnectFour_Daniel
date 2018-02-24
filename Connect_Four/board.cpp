@@ -705,25 +705,17 @@ void board::horizVertCheker(player &player)
 	int countV_P2 = 0;
     int columnEnd = 0;
 
-	//horizIterFast = mapBoard.find(0);
-	//horizIterFast2 =mapBoard.find(0);
-	//int endPoint = 4;
-	//int startPos =0;
-	//int c =7;
-	//int rowNum =7;
+    horizIterFast = mapBoard.find(0);
+    horizIterFast2 =mapBoard.find(0);
+    int endPoint = 4;
+    int startPos =0;
+    int rowEnd =7;
 
-	horizIterFast = mapBoard.find(21);
-	horizIterFast2 =mapBoard.find(21);
-	int endPoint = 25;
-	int startPos =21;
-	int c =28;
-
-	//Horizontal // MAke this work for all
-	while(horizIterFast->first<=35)
+	while(horizIterFast->first<=34)
 	{
-		while(horizIterFast2->first<c)
+		while(horizIterFast2->first<rowEnd)
 		{
-			if(horizIterFast2->first==endPoint && endPoint <c)
+			if(horizIterFast2->first==endPoint && endPoint<rowEnd)
 			{
 				endPoint+=1;
 				startPos+=1;
@@ -762,8 +754,14 @@ void board::horizVertCheker(player &player)
 
 			horizIterFast2++;
 		}
+        
 		std::advance( horizIterFast, 7 );
+        
 		horizIterFast2 =horizIterFast;
+        startPos = horizIterFast->first;
+        endPoint = startPos+4;
+        rowEnd+=7;
+
 	}
 
 	//Vertical 
