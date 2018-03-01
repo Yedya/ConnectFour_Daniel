@@ -56,6 +56,7 @@ void board::printMap()
 		itr++;
 	}
 }
+
 /*
 	Time: 0(N)
 	Space: 0(1)
@@ -78,7 +79,6 @@ void board::playerTurn(player &playerName,int &posToInsert)
 		return;
 	}
 
-
     string symbolToInsert = " ";
     if(playerName.getPlayerName()=="Player 1")
     {
@@ -99,17 +99,13 @@ void board::playerTurn(player &playerName,int &posToInsert)
             if(tileToInsert->second=="| O |"  && (tileBelow->second=="| X |" || tileBelow->second=="| @ |"  ))
             {
                 tileToInsert->second =symbolToInsert;
-				if(columnHeight.size()>=1)
-				{
-					isColumnFull(false,-1);
-				}
                 return;
             }
         }
 		//This is the 5th tile in the column, after this insertion the column is full
         else if(tileToInsert->first==posToInsert) 
         {
-			isColumnFull(true,tileToInsert->first);
+			isColumnFull(tileToInsert->first);
 	        tileToInsert->second =symbolToInsert;
             return;
         }
@@ -118,13 +114,10 @@ void board::playerTurn(player &playerName,int &posToInsert)
 
 	if(tileBelow->second=="| O |") // If num turns <=1 
 	{
-		if(columnHeight.size()>=1)
-		{
-			isColumnFull(false,-1);
-		}
 		tileBelow->second =symbolToInsert;
 	}
 }
+
 /*
 	Time: 0(N)
 	Space: 0(1)
@@ -725,6 +718,8 @@ void board::horizVertCheker(player &player)
     outerIter = mapBoard.begin();
     innerIter = mapBoard.begin();
 	horizIter = mapBoard.find(0);
+    horizIterFast = mapBoard.find(0);
+    horizIterFast2 =mapBoard.find(0);
 
 	int scoreToWin = 4;
 
@@ -733,17 +728,16 @@ void board::horizVertCheker(player &player)
     int countV_P1 = 0;
 	int countV_P2 = 0;
 
-    int columnEnd = 0;
+
 	int endOfRow =28;
-	
+	int columnEnd = ((horizIterFast->first)+(endOfRow));
 
 	int temp1 =0;
 	int temp2= 0;
 	int temp3 =0;
 	int temp4= 0;
 
-    horizIterFast = mapBoard.find(0);
-    horizIterFast2 =mapBoard.find(0);
+
     int endPoint = 4;
     int startPos =0;
 	int distanceToBelowTile = 7;
@@ -752,7 +746,7 @@ void board::horizVertCheker(player &player)
 	
 
 	//Could be done in a function
-	while(horizIterFast->first<=getBoardSize())
+	while(horizIterFast->first<=6)
 	{
 		if(horizIterFast->second=="| X |")
 		{	
@@ -775,15 +769,14 @@ void board::horizVertCheker(player &player)
 		{
 			cout << "Connect 4  on  H " << player.getPlayerName();
 			player.setPlayerStatus(true);
+			return;
 		}
-		if(horizIterFast->first<=6) 
-		{
-			 columnEnd = ((horizIterFast->first)+(endOfRow));
-			 horizIterFast2 =mapBoard.find(horizIterFast->first);
 
-			  // Bug Here, image in paint
-			 while(horizIterFast2->first<=columnEnd)
-			 {
+			// Bug Here, image in paint
+		int l = horizIterFast->first;
+		while(horizIterFast2->first<=28 && horizIterFast->first<=1)
+		{
+				cout << "Num " << horizIterFast2->first << "Symbol  " << columnEnd <<endl;
 				if(horizIterFast2->second=="| X |")
 				{
 					countV_P1+=1;
@@ -800,15 +793,21 @@ void board::horizVertCheker(player &player)
 				{
 					countV_P2=0;
 				}
-				
+				cout << "P " << countV_P1 <<endl;
 				if(countV_P1==scoreToWin || countV_P2==scoreToWin)
 				{
 					cout << "Connect 4  on  V " << player.getPlayerName();
 					player.setPlayerStatus(true);
+					return;
 				}
+
 				std::advance(horizIterFast2,distanceToBelowTile);
-			 }
 		}
+			
+			
+		
+		horizIterFast2 =mapBoard.find(horizIterFast->first);
+		columnEnd = ((horizIterFast->first)+(endOfRow));
 		horizIterFast++;
 	}
 }
@@ -856,25 +855,7 @@ int board::getBoardSize() const
 	return boardSize;
 }
 
-bool board::isColumnFull(bool isTileBelowEmpty,int columnNum)
+void board::isColumnFull(int columnNum)
 {
-	
-	cout << "T:  " << isTileBelowEmpty << endl;
-	if(isTileBelowEmpty==true) // Pass in the tile position
-	{
-		cout << "Pushing " << columnNum << endl;
 		columnHeight.push(columnNum);
-		
-	}
-	else
-	{
-		columnHeight.pop();
-	}
-	//cout << "Current " << columnHeight.top() << " On " <<columnNum;
-	if(columnHeight.size()>=1)
-	{
-		return true;
-	}
-
-	return false;
 }

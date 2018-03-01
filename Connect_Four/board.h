@@ -17,7 +17,7 @@ class board
 		void digonalChecker(player &player);
 		void checkIfWon(string symbol);
 		int getBoardSize() const;
-		bool isColumnFull(bool isTileBelowEmpty,int columnNum);
+		void isColumnFull(int columnNum);
 	private:
 		int boardSize;
 		std::map<int,std::string> mapBoard;

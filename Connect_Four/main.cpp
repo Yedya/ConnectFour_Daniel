@@ -6,8 +6,23 @@ using namespace std;
 #include <algorithm>
 #include <vector>
 #include "board.h"
+#include "regex"
 
 
+
+
+double inputNumber()
+{
+    string str;
+    regex regex_pattern("-?[0-9]+.?[0-9]+");
+    do
+    {
+        cout << "Input a positive number: ";
+        cin >> str;
+    }while(!regex_match(str,regex_pattern));
+
+    return stod(str);
+}
 
 void main()
 {
@@ -19,23 +34,30 @@ void main()
 	string playerName2 = "Player 2";
 	player player_1(playerName1);
 	player player_2(playerName2);
+	regex regex_pattern("-?[0-9]+.?[0-9]+");
 
 	int turns = 0;
 	int pos = 0;
 
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
-	
+
+
 	while(turns<=34 )
 	{
 		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
 		cin >> pos;
 		pos-=1;
-		if(pos<0 || pos>6 || isdigit(pos))
+
+		if(!cin) // or if(cin.fail())
 		{
 			cout << "Number must be between 1-7...please try again" <<endl;
+			// user didn't input a number
+			cin.clear(); // reset failbit
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
 			continue;
+			// next, request user reinput
 		}
 
 			if(turns%2==0)
