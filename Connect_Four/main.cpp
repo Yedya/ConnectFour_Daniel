@@ -25,17 +25,19 @@ void main()
 
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
+	
 	while(turns<=34 )
 	{
 		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
 		cin >> pos;
 		pos-=1;
-		if(pos<0 || pos>6)
+		if(pos<0 || pos>6 || isdigit(pos))
 		{
 			cout << "Number must be between 1-7...please try again" <<endl;
 			continue;
 		}
+
 			if(turns%2==0)
 			{
 				conectFourBoard.playerTurn(player_1,pos);

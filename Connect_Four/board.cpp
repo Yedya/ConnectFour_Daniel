@@ -3,12 +3,25 @@ using namespace std;
 #include <string>
 #include <map>
 #include <algorithm>
+#include <array>
+#include <vector>
 #include <iterator>
 #include "board.h"
 #include "player.h"
+#include <stack>  
+
+int k=0;
 board::board()
 {
 	std::map<int,std::string> mapBoard;
+	std::stack<int> columnHeight;
+
+	//For Initial Piece
+
+
+	player1 = 0;
+	player2 = 0;
+	boardSize =34;
 }
 
 /*
@@ -58,12 +71,13 @@ void board::playerTurn(player &playerName,int &posToInsert)
 	columnIterator = mapBoard.begin();
     int endOfColumn = posToInsert+21;
 
-	//If the column is full
-	if(tileToInsert->second!="| O |")
+	//If the player is attempting to insert on the column that is already full
+	if(columnHeight.size()!=NULL && tileToInsert->first==columnHeight.top())
 	{
 		cout << "This column is full, you just wasted a turn "<<endl;
 		return;
 	}
+
 
     string symbolToInsert = " ";
     if(playerName.getPlayerName()=="Player 1")
@@ -79,24 +93,37 @@ void board::playerTurn(player &playerName,int &posToInsert)
     {
         if(tileBelow->second=="| O |" && tileBelow->first<=endOfColumn)
         {
-            std::advance( tileBelow, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
+			std::advance( tileBelow, 7 ); //Keep iterating until you reach another already inserted piece, insert above it
             std::advance( tileToInsert, 7 );
-
-			//If the tile to insert is free and tiles below it are occuppied, insert the piece there
+			//If the tile to insert is free and the tiles below it are occuppied, insert the piece there
             if(tileToInsert->second=="| O |"  && (tileBelow->second=="| X |" || tileBelow->second=="| @ |"  ))
             {
                 tileToInsert->second =symbolToInsert;
+				if(columnHeight.size()>=1)
+				{
+					isColumnFull(false,-1);
+				}
                 return;
             }
         }
+		//This is the 5th tile in the column, after this insertion the column is full
         else if(tileToInsert->first==posToInsert) 
         {
+			isColumnFull(true,tileToInsert->first);
 	        tileToInsert->second =symbolToInsert;
             return;
         }
         columnIterator++;
     }
-    tileBelow->second =symbolToInsert;
+
+	if(tileBelow->second=="| O |") // If num turns <=1 
+	{
+		if(columnHeight.size()>=1)
+		{
+			isColumnFull(false,-1);
+		}
+		tileBelow->second =symbolToInsert;
+	}
 }
 /*
 	Time: 0(N)
@@ -699,116 +726,155 @@ void board::horizVertCheker(player &player)
     innerIter = mapBoard.begin();
 	horizIter = mapBoard.find(0);
 
+	int scoreToWin = 4;
+
     int countH_P1 = 0;
 	int countH_P2 = 0;
     int countV_P1 = 0;
 	int countV_P2 = 0;
+
     int columnEnd = 0;
+	int endOfRow =28;
+	
+
+	int temp1 =0;
+	int temp2= 0;
+	int temp3 =0;
+	int temp4= 0;
 
     horizIterFast = mapBoard.find(0);
     horizIterFast2 =mapBoard.find(0);
     int endPoint = 4;
     int startPos =0;
+	int distanceToBelowTile = 7;
     int rowEnd =7;
 
-	while(horizIterFast->first<=34)
+	
+
+	//Could be done in a function
+	while(horizIterFast->first<=getBoardSize())
 	{
-		while(horizIterFast2->first<rowEnd)
-		{
-			if(horizIterFast2->first==endPoint && endPoint<rowEnd)
-			{
-				endPoint+=1;
-				startPos+=1;
-				horizIterFast2 =mapBoard.find(startPos);
-			}
-			if(horizIterFast2->second=="| X |")
-			{
-				countH_P1+=1;
-			}
-			else if (horizIterFast2->second!="| X |")
-			{
-				countH_P1 = 0;
-			}
-
-			if(horizIterFast2->second=="| @ |")
-			{
-				countH_P2+=1;
-			}
-			else if (horizIterFast2->second!="| @ |")
-			{
-				countH_P2 = 0;
-			}
-
-			if(countH_P1==4)
-			{
-				cout << "V Connect 4 P1";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countH_P2==4)
-			{
-				cout << "V Connect 4 P2";
-				player.setPlayerStatus(true);
-				return;
-			}
-
-			horizIterFast2++;
+		if(horizIterFast->second=="| X |")
+		{	
+			countH_P1+=1;
 		}
-        
-		std::advance( horizIterFast, 7 );
-        
-		horizIterFast2 =horizIterFast;
-        startPos = horizIterFast->first;
-        endPoint = startPos+4;
-        rowEnd+=7;
+		else
+		{
+			countH_P1=0;
+		}
+		if(horizIterFast->second=="| @ |")
+		{
+			countH_P2+=1;
+		}
+		else
+		{
+			countH_P2=0;
+		}
 
+		if(countH_P1==scoreToWin || countH_P2==scoreToWin)
+		{
+			cout << "Connect 4  on  H " << player.getPlayerName();
+			player.setPlayerStatus(true);
+		}
+		if(horizIterFast->first<=6) 
+		{
+			 columnEnd = ((horizIterFast->first)+(endOfRow));
+			 horizIterFast2 =mapBoard.find(horizIterFast->first);
+
+			  // Bug Here, image in paint
+			 while(horizIterFast2->first<=columnEnd)
+			 {
+				if(horizIterFast2->second=="| X |")
+				{
+					countV_P1+=1;
+				}
+				else
+				{
+					countV_P1=0;
+				}
+				if(horizIterFast2->second=="| @ |")
+				{
+					countV_P2+=1;
+				}
+				else
+				{
+					countV_P2=0;
+				}
+				
+				if(countV_P1==scoreToWin || countV_P2==scoreToWin)
+				{
+					cout << "Connect 4  on  V " << player.getPlayerName();
+					player.setPlayerStatus(true);
+				}
+				std::advance(horizIterFast2,distanceToBelowTile);
+			 }
+		}
+		horizIterFast++;
 	}
+}
 
-	//Vertical 
-    while(outerIter->first!=7)
-    {
-        columnEnd = ((outerIter->first)+28);
-        while(innerIter->first<=columnEnd)
-        { 
-            if(innerIter->second=="| X |")
-            {
-                countV_P1+=1;	
-            }
-			else if(innerIter->second!="| X |")
-			{
-				countV_P1=0;
-			}
-			if(innerIter->second=="| @ |")
-			{
-				countV_P2+=1;
-			}
-			else if(innerIter->second!="| @ |")
-			{
-				countV_P2=0;
-			}
-            std::advance( innerIter, 7 );
-        }
-		if(countV_P1==4)
+void board::checkIfWon(string symbol)
+
+{
+	
+		int p1Score =0;
+			
+		int p2Score = 0;
+		
+		if(symbol=="| X |")
 		{
-			cout << "V Connect 4 P1";
-			player.setPlayerStatus(true);
-			return;
+			
+			p1Score+=1;
 		}
-		else if(countV_P2==4)
+		else
 		{
-			cout << "V Connect 4 P2";
-			player.setPlayerStatus(true);
-			return;
+
+			p1Score=0;
 		}
+		if(symbol=="| @ |")
+		{
+			
+			p2Score+=1;
+		}
+		else
+		{
 
-
-    outerIter++;
-	//Move Our inner iterator to the next column
-    innerIter = outerIter;
-
-    }
-
+			p2Score=0;
+		}
+		cout << "P1  " << p1Score << "P2 " << symbol << endl; //player.getPlayerName();	
+		if(p1Score==4 || p2Score==4)
+		{
+			cout << "Connect 4  on within function" <<endl; //player.getPlayerName();
+			
+		}
+	
 
 }
  
+int board::getBoardSize() const
+{
+	return boardSize;
+}
 
+bool board::isColumnFull(bool isTileBelowEmpty,int columnNum)
+{
+	
+	cout << "T:  " << isTileBelowEmpty << endl;
+	if(isTileBelowEmpty==true) // Pass in the tile position
+	{
+		cout << "Pushing " << columnNum << endl;
+		columnHeight.push(columnNum);
+		
+	}
+	else
+	{
+		columnHeight.pop();
+	}
+	//cout << "Current " << columnHeight.top() << " On " <<columnNum;
+	if(columnHeight.size()>=1)
+	{
+		return true;
+	}
+
+	return false;
+}
