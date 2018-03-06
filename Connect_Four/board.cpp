@@ -10,7 +10,7 @@ using namespace std;
 #include "player.h"
 #include <stack>  
 
-int k=0;
+
 board::board()
 {
 	std::map<int,std::string> mapBoard;
@@ -22,6 +22,9 @@ board::board()
 	player1 = 0;
 	player2 = 0;
 	boardSize =34;
+
+	symbolP1 = "| X |";
+	symbolP2 = "| @ |";
 }
 
 /*
@@ -82,11 +85,11 @@ void board::playerTurn(player &playerName,int &posToInsert)
     string symbolToInsert = " ";
     if(playerName.getPlayerName()=="Player 1")
     {
-        symbolToInsert = "| X |";
+        symbolToInsert = symbolP1;
     }
     else
     {
-        symbolToInsert = "| @ |";
+        symbolToInsert = symbolP2;
     }
 	
     while(columnIterator->first!=7)
@@ -122,591 +125,6 @@ void board::playerTurn(player &playerName,int &posToInsert)
 	Time: 0(N)
 	Space: 0(1)
 */
-void board::digonalChecker(player &player)
-{
-	std::map<int,std::string>::iterator diagonalIter;
-	int startTile =0;
-	int countD_P1 = 0;
-	int countD_P2 = 0;
-
-	//Add if statements to all whiles?
-	// Return true if connect 4
-
-	diagonalIter = mapBoard.find(0);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=24)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(1);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=25)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(2);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=26)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(3);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=27)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(7);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=31)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(8);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=32)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(9);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=33)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 8 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-
-	diagonalIter = mapBoard.find(10);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=34)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-
-			std::advance( diagonalIter, 6 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}	
-	}
-
-	diagonalIter = mapBoard.find(3);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=21)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(4);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=22)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(5);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=23)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(6);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=24)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(11);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=29)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(12);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=30)
-	{
-		if(diagonalIter->second=="| X |")
-		{
-			countD_P1+=1;
-		}
-		else if (diagonalIter->second!="| X |")
-		{
-			countD_P1 = 0;
-		}
-		if(diagonalIter->second=="| @ |")
-		{
-			countD_P2+=1;
-		}
-		else if (diagonalIter->second!="| @ |")
-		{
-			countD_P2 = 0;
-		}
-
-		std::advance( diagonalIter, 6 );
-		if(countD_P2==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-		else if(countD_P1==4)
-		{
-			cout << "Connect 4!";
-			player.setPlayerStatus(true);
-			return;
-		}
-	}	
-	}
-
-	diagonalIter = mapBoard.find(13);
-	if(diagonalIter->second!="| O |")
-	{
-		while(diagonalIter->first<=31)
-		{
-			if(diagonalIter->second=="| X |")
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!="| X |")
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second=="| @ |")
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!="| @ |")
-			{
-				countD_P2 = 0;
-			}
-		
-			std::advance( diagonalIter, 6 );
-			if(countD_P2==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				cout << "Connect 4!";
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
-	}
-}
-
-/*
-	Time: 0(N)
-	Space: 0(1)
-*/
 void board::horizVertCheker(player &player)
 {
     std::map<int,std::string>::iterator outerIter;
@@ -729,87 +147,83 @@ void board::horizVertCheker(player &player)
 	int countV_P2 = 0;
 
 
-	int endOfRow =28;
-	int columnEnd = ((horizIterFast->first)+(endOfRow));
+	int endOfColumn =28;
+	int columnEnd = ((horizIterFast->first)+(endOfColumn));
 
-	int temp1 =0;
-	int temp2= 0;
-	int temp3 =0;
-	int temp4= 0;
-
-
-    int endPoint = 4;
+    int rowEnd = 7;
     int startPos =0;
 	int distanceToBelowTile = 7;
-    int rowEnd =7;
+    int intialRowEnd = 7;
 
-	
 
-	//Could be done in a function
-	while(horizIterFast->first<=6)
+
+	while(horizIterFast->first<rowEnd && horizIterFast->first!=34)
 	{
-		if(horizIterFast->second=="| X |")
+		horizIterFast->second = "| V |";
+		if(horizIterFast->second==symbolP1)
 		{	
 			countH_P1+=1;
 		}
-		else
+		else if(horizIterFast->second!=symbolP1)
 		{
 			countH_P1=0;
 		}
-		if(horizIterFast->second=="| @ |")
+		if(horizIterFast->second==symbolP2)
 		{
 			countH_P2+=1;
 		}
-		else
+		else if(horizIterFast->second!=symbolP2)
 		{
 			countH_P2=0;
 		}
-
 		if(countH_P1==scoreToWin || countH_P2==scoreToWin)
 		{
-			cout << "Connect 4  on  H " << player.getPlayerName();
 			player.setPlayerStatus(true);
 			return;
 		}
-
-			// Bug Here, image in paint
-		int l = horizIterFast->first;
-		while(horizIterFast2->first<=28 && horizIterFast->first<=1)
+		while(horizIterFast2->first<=columnEnd)   //Currently Working
 		{
-				cout << "Num " << horizIterFast2->first << "Symbol  " << columnEnd <<endl;
-				if(horizIterFast2->second=="| X |")
+				/*horizIterFast2->second = "| V |";*/
+				if(horizIterFast2->second==symbolP1)
 				{
 					countV_P1+=1;
 				}
-				else
+				else if(horizIterFast2->second!=symbolP1)
 				{
 					countV_P1=0;
 				}
-				if(horizIterFast2->second=="| @ |")
+				if(horizIterFast2->second==symbolP2)
 				{
 					countV_P2+=1;
 				}
-				else
+				else if(horizIterFast2->second!=symbolP2)
 				{
 					countV_P2=0;
 				}
-				cout << "P " << countV_P1 <<endl;
 				if(countV_P1==scoreToWin || countV_P2==scoreToWin)
 				{
-					cout << "Connect 4  on  V " << player.getPlayerName();
 					player.setPlayerStatus(true);
 					return;
 				}
-
 				std::advance(horizIterFast2,distanceToBelowTile);
-		}
-			
-			
-		
-		horizIterFast2 =mapBoard.find(horizIterFast->first);
-		columnEnd = ((horizIterFast->first)+(endOfRow));
+		}	
+
 		horizIterFast++;
+		if(horizIterFast->first<=6)
+		{
+			//horizIterFast2 =mapBoard.find(horizIterFast->first);
+			//columnEnd = ((horizIterFast->first)+(endOfColumn));
+		}
+		if(horizIterFast->first==intialRowEnd)
+		{
+			horizIterFast = mapBoard.find(rowEnd);
+			rowEnd+=7;
+			/*intialRowEnd+=6;*/
+		}
+
+
 	}
+
 }
 
 void board::checkIfWon(string symbol)
@@ -858,4 +272,136 @@ int board::getBoardSize() const
 void board::isColumnFull(int columnNum)
 {
 		columnHeight.push(columnNum);
+}
+
+void board::diagonalCheckerRightSide(player &player, int startTile,int endTile)
+{
+	
+	
+	int advanceItrValue = 8;
+	int countD_P1 = 0;
+	int countD_P2 = 0;
+	int nextPos = 7;
+	int upperRowLimit = 4;
+	int lowerRowLimit = 10;
+	int diagonalEnd = 31;
+
+
+	if(startTile==upperRowLimit)
+	{
+		startTile= nextPos;
+		endTile= diagonalEnd;
+	}
+
+	if (startTile==lowerRowLimit) return;
+	
+
+	std::map<int,std::string>::iterator diagonalIter;
+	diagonalIter = mapBoard.find(startTile);
+
+		while(diagonalIter->first<=endTile)
+		{
+			if(diagonalIter->second==symbolP1)
+			{
+				countD_P1+=1;
+			}
+			else if (diagonalIter->second!=symbolP1)
+			{
+				countD_P1 = 0;
+			}
+			if(diagonalIter->second==symbolP2)
+			{
+				countD_P2+=1;
+			}
+			else if (diagonalIter->second!=symbolP2)
+			{
+				countD_P2 = 0;
+			}
+			std::advance( diagonalIter, advanceItrValue );
+			if(countD_P2==4)
+			{
+				cout << "Connect 4!";
+				player.setPlayerStatus(true);
+				return;
+			}
+			else if(countD_P1==4)
+			{
+				cout << "Connect 4!";
+				player.setPlayerStatus(true);
+				return;
+			}
+		}
+
+	diagonalCheckerRightSide(player,startTile+1,endTile+1); 
+	
+}
+
+void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
+{
+	
+	
+	int advanceItrValue = 6;
+	int countD_P1 = 0;
+	int countD_P2 = 0;
+	int nextPos = 11;
+	int upperRowLimit = 7;
+	int lowerRowLimit = 14;
+	int diagonalEnd = 29;
+
+	if(startTile==upperRowLimit)
+	{
+		startTile= nextPos;
+		endTile= diagonalEnd;
+	}
+	//Special Case for middle diagonal 
+	if (startTile==lowerRowLimit)
+	{
+		startTile = 10;
+		endTile =34;
+	}
+
+	std::map<int,std::string>::iterator diagonalIter;
+	diagonalIter = mapBoard.find(startTile);
+	
+		while(diagonalIter->first<=endTile)
+		{
+			if(diagonalIter->second==symbolP1)
+			{
+				countD_P1+=1;
+			}
+			else if (diagonalIter->second!=symbolP1)
+			{
+				countD_P1 = 0;
+			}
+			if(diagonalIter->second==symbolP2)
+			{
+				countD_P2+=1;
+			}
+			else if (diagonalIter->second!=symbolP2)
+			{
+				countD_P2 = 0;
+			}
+			std::advance( diagonalIter, advanceItrValue );
+			if(countD_P2==4)
+			{
+				player.setPlayerStatus(true);
+				return;
+			}
+			else if(countD_P1==4)
+			{
+				player.setPlayerStatus(true);
+				return;
+			}
+		}
+		
+	if (endTile == 34 ) return;
+	diagonalCheckerLeftSide(player,startTile+1,endTile+1);
+	
+}
+
+void board::verticalRecCheck(player &player)
+{
+
+
+
 }

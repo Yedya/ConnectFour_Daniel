@@ -5,27 +5,17 @@ using namespace std;
 #include <iterator>
 #include <algorithm>
 #include <vector>
+#include <array>
 #include "board.h"
 #include "regex"
 
 
 
 
-double inputNumber()
-{
-    string str;
-    regex regex_pattern("-?[0-9]+.?[0-9]+");
-    do
-    {
-        cout << "Input a positive number: ";
-        cin >> str;
-    }while(!regex_match(str,regex_pattern));
-
-    return stod(str);
-}
 
 void main()
 {
+
 	board conectFourBoard;
 	conectFourBoard.initializeBoard();
 	conectFourBoard.printMap();
@@ -39,6 +29,12 @@ void main()
 	int turns = 0;
 	int pos = 0;
 
+	int rightStartPos = 0;
+	int rightEndPos = 24;
+	int leftStartPos = 3;
+	int leftEndPos = 21;
+
+
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
 
@@ -50,7 +46,7 @@ void main()
 		cin >> pos;
 		pos-=1;
 
-		if(!cin) // or if(cin.fail())
+		if(!cin) 
 		{
 			cout << "Number must be between 1-7...please try again" <<endl;
 			// user didn't input a number
@@ -64,13 +60,15 @@ void main()
 			{
 				conectFourBoard.playerTurn(player_1,pos);
 				conectFourBoard.horizVertCheker(player_1);  
-				conectFourBoard.digonalChecker(player_1);
+				conectFourBoard.diagonalCheckerRightSide(player_1,rightStartPos,rightEndPos); 
+				conectFourBoard.diagonalCheckerLeftSide(player_1,leftStartPos,leftEndPos);
 			}
 			else
 			{
 				conectFourBoard.playerTurn(player_2,pos);
 				conectFourBoard.horizVertCheker(player_2);  
-				conectFourBoard.digonalChecker(player_2);
+				conectFourBoard.diagonalCheckerRightSide(player_2,rightStartPos,rightEndPos); 
+				conectFourBoard.diagonalCheckerLeftSide(player_2,leftStartPos,leftEndPos);
 			}
 
 			cout << "\n "<<endl;
