@@ -13,13 +13,19 @@ class board
 		void initializeBoard();
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
+
 		void verticalChecker(player &player);
 		void horizontalRecurisveChecker(player &player,int startPos);
+		void verticalRecurisveChecker(player &player,int startPos);
+
+		void diagonalCheckerRightSide(player &player,int startPoint,int endTile);
+		void diagonalCheckerLeftSide(player &player, int startTile,int endTile);
+
 		void checkIfWon(string symbol);
 		int getBoardSize() const;
 		void isColumnFull(int columnNum);
-		void diagonalCheckerRightSide(player &player,int startPoint,int endTile);
-		void diagonalCheckerLeftSide(player &player, int startTile,int endTile);
+
+
 	private:
 		int boardSize;
 		std::map<int,std::string> mapBoard;
