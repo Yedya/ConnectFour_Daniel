@@ -9,18 +9,10 @@ using namespace std;
 #include "board.h"
 #include "regex"
 
-void turnTaken(board conectFourBoard)
-{
-
-
-
-}
-
 
 
 void main()
 {
-
 	board conectFourBoard;
 	conectFourBoard.initializeBoard();
 	conectFourBoard.printMap();
@@ -29,24 +21,17 @@ void main()
 	string playerName2 = "Player 2";
 	player player_1(playerName1);
 	player player_2(playerName2);
-	
 
 	int turns = 0;
 	int pos = 0;
-
-	int rightStartPos = 0;
-	int rightEndPos = 24;
-	int leftStartPos = 3;
-	int leftEndPos = 21;
-
 	int inputMin =0;
 	int inputMax = 7;
+	int maxTurns = 34;
 
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
 
-
-	while(turns<=34)
+	while(turns<=maxTurns)
 	{
 		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
@@ -61,6 +46,7 @@ void main()
 			continue;
 			// next, request user reinput
 		}
+
 		if(pos>inputMax || pos<=inputMin)
 		{
 			cout << "Number must be between 1-7...please try again" <<endl;
@@ -76,26 +62,14 @@ void main()
 		if(turns%2==0)
 		{
 			conectFourBoard.playerTurn(player_1,pos);
-			//conectFourBoard.verticalChecker(player_1);  
-			conectFourBoard.verticalRecurisveChecker(player_1,0);
-
-			conectFourBoard.diagonalCheckerRightSide(player_1,rightStartPos,rightEndPos); 
-			conectFourBoard.diagonalCheckerLeftSide(player_1,leftStartPos,leftEndPos);
-
-			conectFourBoard.horizontalRecurisveChecker(player_1,0);
+			conectFourBoard.turnTaken(player_1);
 		}
+
 		else
 		{
 			conectFourBoard.playerTurn(player_2,pos);
-			//conectFourBoard.verticalChecker(player_2);  
-			conectFourBoard.verticalRecurisveChecker(player_2,0);
-
-			conectFourBoard.diagonalCheckerRightSide(player_2,rightStartPos,rightEndPos); 
-			conectFourBoard.diagonalCheckerLeftSide(player_2,leftStartPos,leftEndPos);
-
-			conectFourBoard.horizontalRecurisveChecker(player_2,0);
+			conectFourBoard.turnTaken(player_2);
 		}
-
 		conectFourBoard.printMap();
 
 		turns++;

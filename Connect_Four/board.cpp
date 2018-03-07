@@ -183,44 +183,6 @@ void board::verticalChecker(player &player)
 
 }
 
-void board::checkIfWon(string symbol)
-
-{
-	
-		int p1Score =0;
-			
-		int p2Score = 0;
-		
-		if(symbol=="| X |")
-		{
-			
-			p1Score+=1;
-		}
-		else
-		{
-
-			p1Score=0;
-		}
-		if(symbol=="| @ |")
-		{
-			
-			p2Score+=1;
-		}
-		else
-		{
-
-			p2Score=0;
-		}
-		cout << "P1  " << p1Score << "P2 " << symbol << endl; //player.getPlayerName();	
-		if(p1Score==4 || p2Score==4)
-		{
-			cout << "Connect 4  on within function" <<endl; //player.getPlayerName();
-			
-		}
-	
-
-}
- 
 int board::getBoardSize() const
 {
 	return boardSize;
@@ -231,6 +193,10 @@ void board::isColumnFull(int columnNum)
 		columnHeight.push(columnNum);
 }
 
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::diagonalCheckerRightSide(player &player, int startTile,int endTile)
 {
 	int advanceItrValue = 8;
@@ -275,13 +241,11 @@ void board::diagonalCheckerRightSide(player &player, int startTile,int endTile)
 			std::advance( diagonalIter, advanceItrValue );
 			if(countD_P2==4)
 			{
-				cout << "Connect 4!";
 				player.setPlayerStatus(true);
 				return;
 			}
 			else if(countD_P1==4)
 			{
-				cout << "Connect 4!";
 				player.setPlayerStatus(true);
 				return;
 			}
@@ -291,6 +255,10 @@ void board::diagonalCheckerRightSide(player &player, int startTile,int endTile)
 	
 }
 
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
 {
 	
@@ -354,6 +322,10 @@ void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
 	
 }
 
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::horizontalRecurisveChecker(player &player,int startPos)
 {
 	//Base Case
@@ -396,12 +368,15 @@ void board::horizontalRecurisveChecker(player &player,int startPos)
 	horizontalRecurisveChecker(player,startPos+7);
 }
 
+/*
+	Time: 0(N)
+	Space: 0(1)
+*/
 void board::verticalRecurisveChecker(player &player,int startPos)
 {
-
+	
 	//Base Case
 	if(startPos>7 || player.getPlayerStatus()==true) return;
-
 
 	std::map<int,std::string>::iterator outerIterator;
 	std::map<int,std::string>::iterator vertIterator;
@@ -412,8 +387,6 @@ void board::verticalRecurisveChecker(player &player,int startPos)
 	int scoreToWin = 4;
     int countV_P1 = 0;
 	int countV_P2 = 0;
-	int countH_P1 = 0;
-	int countH_P2 = 0;
 
 	int columnHeight =28;
 	int columnEnd = ((outerIterator->first)+(columnHeight));
@@ -422,41 +395,52 @@ void board::verticalRecurisveChecker(player &player,int startPos)
 
 	if(outerIterator->first<rowEnd)
 	{
-
-		while(vertIterator->first<=columnEnd)   //Currently Working
-		{
-				//vertIterator->second = "| V |";
-				if(vertIterator->second==symbolP1)
-				{
-					countV_P1+=1;
-				}
-				else if(vertIterator->second!=symbolP1)
-				{
-					countV_P1=0;
-				}
-				if(vertIterator->second==symbolP2)
-				{
-					countV_P2+=1;
-				}
-				else if(vertIterator->second!=symbolP2)
-				{
-					countV_P2=0;
-				}
-				if(countV_P1==scoreToWin || countV_P2==scoreToWin)
-				{
-					player.setPlayerStatus(true);
-					return;
-				}
-				std::advance(vertIterator,distanceToBelowTile);
-				//verticalRecurisveChecker(player,startPos
+		
+		while(vertIterator->first<=columnEnd) 
+		{	
+			if(vertIterator->second==symbolP1)
+			{
+				countV_P1+=1;
+			}
+			else if(vertIterator->second!=symbolP1)
+			{
+				countV_P1=0;
+			}
+			if(vertIterator->second==symbolP2)
+			{
+				countV_P2+=1;
+			}
+			else if(vertIterator->second!=symbolP2)
+			{
+				countV_P2=0;
+			}
+			if(countV_P1==scoreToWin || countV_P2==scoreToWin)
+			{
+				player.setPlayerStatus(true);
+				return;
+			}
+			std::advance(vertIterator,distanceToBelowTile);	
 		}	
-
-		//outerIterator++;
 		vertIterator = mapBoard.find(outerIterator->first);
 		columnEnd = ((outerIterator->first)+(columnHeight));
 
-
 	}
 	verticalRecurisveChecker(player,startPos+1);
+
+}
+
+void board::turnTaken(player &player)
+{
+	int rightStartPos = 0;
+	int rightEndPos = 24;
+	int leftStartPos = 3;
+	int leftEndPos = 21;
+	int diagonalStartPoint = 0;
+
+	diagonalCheckerRightSide(player,rightStartPos,rightEndPos); 
+	diagonalCheckerLeftSide(player,leftStartPos,leftEndPos);
+	horizontalRecurisveChecker(player,diagonalStartPoint);
+	verticalRecurisveChecker(player,diagonalStartPoint);
+
 
 }

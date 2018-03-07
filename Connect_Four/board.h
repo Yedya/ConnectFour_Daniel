@@ -13,6 +13,7 @@ class board
 		void initializeBoard();
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
+		void turnTaken(player &player);
 
 		void verticalChecker(player &player);
 		void horizontalRecurisveChecker(player &player,int startPos);
