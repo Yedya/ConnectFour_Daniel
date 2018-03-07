@@ -115,88 +115,54 @@ void board::playerTurn(player &playerName,int &posToInsert)
         columnIterator++;
     }
 
-	if(tileBelow->second=="| O |") // If num turns <=1 
+	if(tileBelow->second=="| O |") 
 	{
 		tileBelow->second =symbolToInsert;
 	}
 }
 
 /*
-	Time: 0(N)
+	Time: 0(N)^2
 	Space: 0(1)
 */
-void board::horizVertCheker(player &player)
+void board::verticalChecker(player &player)
 {
-    std::map<int,std::string>::iterator outerIter;
-    std::map<int,std::string>::iterator innerIter;
-	std::map<int,std::string>::iterator horizIter;
-	std::map<int,std::string>::iterator horizIterFast;
-	std::map<int,std::string>::iterator horizIterFast2;
+	std::map<int,std::string>::iterator outerIterator;
+	std::map<int,std::string>::iterator innerIterator;
 
-    outerIter = mapBoard.begin();
-    innerIter = mapBoard.begin();
-	horizIter = mapBoard.find(0);
-    horizIterFast = mapBoard.find(0);
-    horizIterFast2 =mapBoard.find(0);
+    outerIterator = mapBoard.find(0);
+    innerIterator =mapBoard.find(0);
 
 	int scoreToWin = 4;
-
-    int countH_P1 = 0;
-	int countH_P2 = 0;
     int countV_P1 = 0;
 	int countV_P2 = 0;
 
-
-	int endOfColumn =28;
-	int columnEnd = ((horizIterFast->first)+(endOfColumn));
-
+	int columnHeight =28;
+	int columnEnd = ((outerIterator->first)+(columnHeight));
     int rowEnd = 7;
     int startPos =0;
 	int distanceToBelowTile = 7;
-    int intialRowEnd = 7;
 
-
-
-	while(horizIterFast->first<rowEnd && horizIterFast->first!=34)
+	while(outerIterator->first<rowEnd)
 	{
-		horizIterFast->second = "| V |";
-		if(horizIterFast->second==symbolP1)
-		{	
-			countH_P1+=1;
-		}
-		else if(horizIterFast->second!=symbolP1)
+		//outerIterator->second = "| V |";
+
+		while(innerIterator->first<=columnEnd)   //Currently Working
 		{
-			countH_P1=0;
-		}
-		if(horizIterFast->second==symbolP2)
-		{
-			countH_P2+=1;
-		}
-		else if(horizIterFast->second!=symbolP2)
-		{
-			countH_P2=0;
-		}
-		if(countH_P1==scoreToWin || countH_P2==scoreToWin)
-		{
-			player.setPlayerStatus(true);
-			return;
-		}
-		while(horizIterFast2->first<=columnEnd)   //Currently Working
-		{
-				/*horizIterFast2->second = "| V |";*/
-				if(horizIterFast2->second==symbolP1)
+				//innerIterator->second = "| V |";
+				if(innerIterator->second==symbolP1)
 				{
 					countV_P1+=1;
 				}
-				else if(horizIterFast2->second!=symbolP1)
+				else if(innerIterator->second!=symbolP1)
 				{
 					countV_P1=0;
 				}
-				if(horizIterFast2->second==symbolP2)
+				if(innerIterator->second==symbolP2)
 				{
 					countV_P2+=1;
 				}
-				else if(horizIterFast2->second!=symbolP2)
+				else if(innerIterator->second!=symbolP2)
 				{
 					countV_P2=0;
 				}
@@ -205,21 +171,12 @@ void board::horizVertCheker(player &player)
 					player.setPlayerStatus(true);
 					return;
 				}
-				std::advance(horizIterFast2,distanceToBelowTile);
+				std::advance(innerIterator,distanceToBelowTile);
 		}	
 
-		horizIterFast++;
-		if(horizIterFast->first<=6)
-		{
-			//horizIterFast2 =mapBoard.find(horizIterFast->first);
-			//columnEnd = ((horizIterFast->first)+(endOfColumn));
-		}
-		if(horizIterFast->first==intialRowEnd)
-		{
-			horizIterFast = mapBoard.find(rowEnd);
-			rowEnd+=7;
-			/*intialRowEnd+=6;*/
-		}
+		outerIterator++;
+		innerIterator = mapBoard.find(outerIterator->first);
+		columnEnd = ((outerIterator->first)+(columnHeight));
 
 
 	}
@@ -399,9 +356,44 @@ void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
 	
 }
 
-void board::verticalRecCheck(player &player)
+void board::horizontalRecurisveChecker(player &player,int startPos)
 {
+	//Base Case
+	if(startPos>28 || player.getPlayerStatus()==true) return;
 
+	std::map<int,std::string>::iterator horizIterator;
+    horizIterator = mapBoard.find(startPos);
+   
+	int scoreToWin = 4;
+    int countH_P1 = 0;
+	int countH_P2 = 0;
+    int rowEnd = startPos+6;
 
+	while(horizIterator->first<=rowEnd )
+	{
+		if(horizIterator->second==symbolP1)
+		{	
+			countH_P1+=1;
+		}
+		else if(horizIterator->second!=symbolP1)
+		{
+			countH_P1=0;
+		}
+		if(horizIterator->second==symbolP2)
+		{
+			countH_P2+=1;
+		}
+		else if(horizIterator->second!=symbolP2)
+		{
+			countH_P2=0;
+		}
+		if(countH_P1==scoreToWin || countH_P2==scoreToWin)
+		{
+			player.setPlayerStatus(true);
+			return;
+		}
+		horizIterator++;
+	}
 
+	horizontalRecurisveChecker(player,startPos+7);
 }

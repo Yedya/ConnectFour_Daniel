@@ -39,11 +39,16 @@ void main()
 	cout << "Player One Goes first" <<endl;
 
 
-	while(turns<=34 )
+	while(turns<=34)
 	{
 		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
 		cin >> pos;
+		if(pos>7 || pos<=0)
+		{
+			cout << "Number must be between 1-7...please try again" <<endl;
+			continue;
+		}
 		pos-=1;
 
 		if(!cin) 
@@ -59,16 +64,22 @@ void main()
 			if(turns%2==0)
 			{
 				conectFourBoard.playerTurn(player_1,pos);
-				conectFourBoard.horizVertCheker(player_1);  
+				conectFourBoard.verticalChecker(player_1);  
+
 				conectFourBoard.diagonalCheckerRightSide(player_1,rightStartPos,rightEndPos); 
 				conectFourBoard.diagonalCheckerLeftSide(player_1,leftStartPos,leftEndPos);
+
+				conectFourBoard.horizontalRecurisveChecker(player_1,0);
 			}
 			else
 			{
 				conectFourBoard.playerTurn(player_2,pos);
-				conectFourBoard.horizVertCheker(player_2);  
+				conectFourBoard.verticalChecker(player_2);  
+
 				conectFourBoard.diagonalCheckerRightSide(player_2,rightStartPos,rightEndPos); 
 				conectFourBoard.diagonalCheckerLeftSide(player_2,leftStartPos,leftEndPos);
+
+				conectFourBoard.horizontalRecurisveChecker(player_2,0);
 			}
 
 			cout << "\n "<<endl;

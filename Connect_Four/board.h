@@ -13,8 +13,8 @@ class board
 		void initializeBoard();
 		void printMap();
 		void playerTurn(player &playerName,int &posToInsert);
-		void horizVertCheker(player &player);
-		void verticalRecCheck(player &player);
+		void verticalChecker(player &player);
+		void horizontalRecurisveChecker(player &player,int startPos);
 		void checkIfWon(string symbol);
 		int getBoardSize() const;
 		void isColumnFull(int columnNum);
