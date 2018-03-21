@@ -9,14 +9,12 @@ using namespace std;
 #include "board.h"
 #include "regex"
 
-
-
 void main()
 {
 	board conectFourBoard;
 	conectFourBoard.initializeBoard();
 	conectFourBoard.printMap();
-
+	
 	string playerName1 = "Player 1";
 	string playerName2 = "Player 2";
 	player player_1(playerName1);
@@ -26,12 +24,11 @@ void main()
 	int pos = 0;
 	int inputMin =0;
 	int inputMax = 7;
-	int maxTurns = 34;
 
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
 
-	while(turns<=maxTurns)
+	while(conectFourBoard.isBoardFull()==false)
 	{
 		cout << "\n" <<endl;
 		cout << "Please Enter a position to Insert [Must be between 1-7]" <<endl;
@@ -53,10 +50,8 @@ void main()
 			continue;
 		}
 
-		/* 
-			Minus 1 from the pos as our board starts at zero, 
-			It's nice UX to have them enter 1-7 as they're visually displayed as 1-7
-		*/
+		//	Minus 1 from the pos as our board starts at zero, 
+		//	It's nice UX to have them enter 1-7 as they're visually displayed as 1-7
 		pos-=1;
 
 		if(turns%2==0)
@@ -79,10 +74,11 @@ void main()
 		}
 	}
 
-	if(turns==35 && (player_1.getPlayerStatus()==false || player_2.getPlayerStatus()==false))
+	if(conectFourBoard.isBoardFull()==true)
 	{
+		cout << "\n" <<endl;
 		cout << "Board is full, and nobody won..." <<endl;
-		return;
+		//ToDo: Restart game?
 	}
 
 	else if(player_1.getPlayerStatus()==true)
@@ -96,7 +92,7 @@ void main()
 		cout << "\n "<<endl;
 		cout << "Player 2 Wins" <<endl;
 	}
-
+	
 	system("pause");
 }
 
