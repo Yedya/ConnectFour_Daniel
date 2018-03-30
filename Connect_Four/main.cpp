@@ -27,7 +27,7 @@ void main()
 
 	cout << "\n" <<endl;
 	cout << "Player One Goes first" <<endl;
-
+	cout << "\n" <<endl;
 	while(conectFourBoard.isBoardFull()==false)
 	{
 		cout << "\n" <<endl;
