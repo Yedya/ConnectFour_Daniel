@@ -227,8 +227,11 @@ void board::diagonalCheckerRightSide(player &player, int startTile,int endTile)
 void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
 {
 	
+	if (startTile ==23  && endTile == 29 ) return;
+	////if (startTile >=23  && endTile == 29 ) return;
+	/*if (startTile > 23 && endTile == 23 ) return;*/
 	
-	int advanceItrValue = 6;
+	int ItrValue = 6;
 	int countD_P1 = 0;
 	int countD_P2 = 0;
 	int nextPos = 11;
@@ -236,55 +239,71 @@ void board::diagonalCheckerLeftSide(player &player, int startTile,int endTile)
 	int lowerRowLimit = 14;
 	int diagonalEnd = 29;
 
-	if(startTile==upperRowLimit)
-	{
-		startTile= nextPos;
-		endTile= diagonalEnd;
-	}
-	//Special Case for middle diagonal 
+//	if(startTile==upperRowLimit)
+//	{
+	//	startTile= nextPos;
+	//	endTile= diagonalEnd;
+//	}
+	/* Special Case for middle diagonal 
 	if (startTile==lowerRowLimit)
 	{
 		startTile = 10;
 		endTile =34;
-	}
-
+	} */
+	
 	std::map<int,std::string>::iterator diagonalIter;
 	diagonalIter = mapBoard.find(startTile);
+	if(diagonalIter->first<=endTile)
+	{
+			diagonalIter->second = "| V |";
+			cout << diagonalIter->first << " End Tile "  << endTile << endl;
+			diagonalCheckerLeftSide(player,startTile+=ItrValue,endTile); 
+	}
 	
-		while(diagonalIter->first<=endTile)
-		{
-			if(diagonalIter->second==symbolP1)
-			{
-				countD_P1+=1;
-			}
-			else if (diagonalIter->second!=symbolP1)
-			{
-				countD_P1 = 0;
-			}
-			if(diagonalIter->second==symbolP2)
-			{
-				countD_P2+=1;
-			}
-			else if (diagonalIter->second!=symbolP2)
-			{
-				countD_P2 = 0;
-			}
-			std::advance( diagonalIter, advanceItrValue );
-			if(countD_P2==4)
-			{
-				player.setPlayerStatus(true);
-				return;
-			}
-			else if(countD_P1==4)
-			{
-				player.setPlayerStatus(true);
-				return;
-			}
-		}
+
+
+
+	if (startTile == 21 )
+	{
+		startTile=3;
+		startTile+=1;
+		endTile= startTile*7;
+		diagonalCheckerLeftSide(player,startTile,endTile); 
+	}
+
+	if (startTile == 28 )
+	{
+		startTile=4;
+		startTile+=1;
+		endTile= 23;
+		diagonalCheckerLeftSide(player,startTile,endTile); 
+	}
+
+
+
+
+
+	if (startTile == 23 )
+	{
+		startTile=10;
+		startTile+=1;
+		endTile= 29;
+		cout << endTile << " "<< " " << startTile << endl;
+		diagonalCheckerLeftSide(player,startTile,endTile); 
+	}
+
+/*
+	if (startTile == 29 )
+	{
+		cout << "Hit" << endTile << endl;
 		
-	if (endTile == 34 ) return;
-	diagonalCheckerLeftSide(player,startTile+1,endTile+1);
-	
+		startTile=4;
+		startTile+=1;
+		endTile= 23;
+		cout << endTile << " "<< " " << startTile << endl;
+		diagonalCheckerLeftSide(player,startTile,endTile); 
+		
+	}	*/
 }
 
 /*
@@ -399,7 +418,7 @@ void board::turnTaken(player &player)
 	int verticalIteratorPos =0;
 
 	//diagonalCheckerRightSide(player,rightStartPos,rightEndPos); 
-	//diagonalCheckerLeftSide(player,leftStartPos,leftEndPos);
+	diagonalCheckerLeftSide(player,leftStartPos,leftEndPos);
 	horizontalRecurisveChecker(player,diagonalStartPoint,0); 
 	verticalRecursiveChecker(player,diagonalStartPoint,verticalIteratorPos);
 
